@@ -1,0 +1,69 @@
+import copy
+
+class Book(object):
+    # занос даних через ініт 
+    def __init__(self, autor, title, year, ganre, comments=[]):
+        self.autor = autor
+        self.title = title
+        self.year = year
+        self.ganre = ganre
+        self.comments = comments
+
+    def __eq__(self, other):
+        if not isinstance(other, Book):
+            return False
+        return self.autor == other.autor and \
+            self.title == other.title and \
+            self.year == other.year and \
+            self.ganre == other.ganre
+
+    def __as_string(self, format_string):
+        return format_string.format(
+            self.autor,
+            self.title,
+            self.year,
+            self.ganre,
+            self.comments
+        )
+
+    def __str__(self):
+        book =  self.__as_string('"{1}" by {0} (published in {2}, genre: {3})'""
+                                 "\nComments:\n")
+        comments = "\n".join(map(str, self.comments)) or "no comments aQ"
+        return book + comments
+
+    def __repr__(self):
+        return self.__as_string("Book({0!r}, {1!r}, {2!r}, {3!r})")
+
+class Comment(object):
+    def __init__(self, mark, text):
+        self.mark = mark
+        self.text = text
+
+    def __repr__(self):
+        return "Comments({!r}), ({!r})".format(self.mark, self.text)
+
+    def __str__(self):
+        return "Mark: {}\nReview: {}".format(self.mark, self.text)
+
+def main():
+
+    book_kachmar = Book("Kachmar Andriy", "story Abaut life", 2008, "comedia",)
+    book_bodnik = Book("ІППТ", "aducation", 2022, "coooomedia")
+
+    book_kachmar.comments = [
+        Comment(1, "realy? you spisav ex kachmar"),
+        Comment(1, "cool it's realy cool bool"),
+    ]
+
+
+    print(book_bodnik)
+    print()
+    print(book_kachmar)
+    print()
+
+    print(repr(book_bodnik))
+    print(repr(book_kachmar))
+
+if __name__ == "__main__":
+    main()
