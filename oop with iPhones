@@ -1,0 +1,72 @@
+import copy
+
+
+class Phone(object):
+
+    def __init__(self, company, model, year, color, comments=[]):
+        self.company = company
+        self.model = model
+        self.year = year
+        self.color = color
+        self.comments = comments
+
+    def __eq__(self, other):
+        if not isinstance(other, Phone):
+            return False
+        return self.company == other.company and \
+               self.model == other.model and \
+               self.year == other.year and \
+               self.color == other.color
+
+    def __as_sting(self, format_string):
+        return format_string.format(
+            self.company,
+            self.model,
+            self.year,
+            self.color,
+            self.comments
+        )
+
+    def __str__(self):
+        phone = self.__as_sting('"{1}" by {0} (published in {2}, limit in: {3})'""
+                                 "\nComments:\n")
+        comments = "\n".join(map(str, self.comments)) or "no comments aQ😭"
+        return phone + comments
+
+    def __repr__(self):
+        return self.__as_sting("Phone({0!r}, {1!r}, {2!r}, {3!r})")
+
+
+class Comment(object):
+    def __init__(self, mark, text):
+        self.mark = mark
+        self.text = text
+
+    def __repr__(self):
+        return "Comments({!r}), ({!r})".format(self.mark, self.text)
+
+    def __str__(self):
+        return "Mark: {}\nReview: {}".format(self.mark, self.text)
+
+
+def main():
+    phone_iPhone8 = Phone("iPhone", "iphone 8 64gb", "2015", "black")
+    phone_iPhoneX = Phone("iPhone", "iphone X 256gb", "2019", "white")
+
+    phone_iPhone8.comments = [
+        Comment(1, "realy cool fono for it price, i recomended lol❤️"),
+        Comment(1,"i dont like this phone beacose iPhone, but camera its perfect"),
+    ]
+
+
+    print(phone_iPhone8)
+    print()
+    print(phone_iPhoneX)
+    print()
+
+    print(repr(phone_iPhoneX))
+    print(repr(phone_iPhone8))
+
+
+if __name__ == "__main__":
+    main()
